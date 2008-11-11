@@ -13,8 +13,8 @@ with a prespecified Pearson correlation.
 \tabular{ll}{
 Package: \tab corcounts\cr
 Type: \tab Package\cr
-Version: \tab 1.0\cr
-Date: \tab 2008-11-08\cr
+Version: \tab 1.1\cr
+Date: \tab 2008-11-11\cr
 License: \tab GPL (>= 3)\cr
 LazyLoad: \tab yes\cr
 }

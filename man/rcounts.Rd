@@ -30,13 +30,27 @@ The function will return a matrix of counts of dimension N x T.
 \author{ Vinzenz Erhardt }
 \examples{
 N <- 5000
+
+# high precision in dimension 2
+margins <- c("ZIGP","GP")
+mu <-    c(10,  15)
+phi <-   c(1.5, 3.5)
+omega <- c(.25, NA)
+psi <-   c(NA,  NA)
+corstr <- "ex"
+corpar <- .5
+Y <- rcounts(N=N, margins=margins, mu=mu, phi=phi, omega=omega, psi=psi, corstr=corstr, corpar=corpar, conv=0.0001)
+cor(Y)
+
+
+# five-dimensional examples
 margins <- c("ZIGP","GP","Poi","NB","ZIP")
-mu <-    c(10,  15,  12, 20, 28)
-phi <-   c(1.5, 3.5, NA, NA, NA)
+mu <-    c(10,  25,  12, 20, 28)
+phi <-   c(1.5, 2,   NA, NA, NA)
 omega <- c(.25, NA,  NA, NA, .2)
 psi <-   c(NA,  NA,  NA, 7,  NA)
 
-# Exchangeable structure with correlation of 50 %
+# Exchangeable structure with correlation of 0.5
 corstr <- "ex"
 corpar <- .5
 Y <- rcounts(N=N, margins=margins, mu=mu, phi=phi, omega=omega, psi=psi, corstr=corstr, corpar=corpar)

@@ -2,9 +2,19 @@
 function(N, margins, mu, phi, omega, psi, corstr, corpar, conv=0.01) {
   error <- F
   dimension <- length(margins)
-  if (corstr=="ex") Ctarget <- R11.exchangeable(corpar,dimension)
-  if (corstr=="AR1") Ctarget <- R11.AR1(corpar,dimension)
-  if (corstr=="unstr") Ctarget <- corpar
+  if (corstr=="ex") {
+    if (is.matrix(corpar)) stop("'corpar' must be scalar.")
+    Ctarget <- R11.exchangeable(corpar,dimension)
+  }
+  if (corstr=="AR1") {
+    if (is.matrix(corpar)) stop("'corpar' must be scalar.")
+    Ctarget <- R11.AR1(corpar,dimension)   
+  }
+  if (corstr=="unstr") { 
+    if (is.matrix(corpar)==FALSE) stop("'corpar' must be a matrix.")
+    if (dim(corpar)[1]!=dimension | dim(corpar)[2]!=dimension) stop("Dimension of 'corpar' must be T x T.")
+    Ctarget <- corpar
+  }
   out <- rep(NA,dimension-1)
   for (i in 2:dimension) {
     out[i-1] <- (det(Ctarget[1:i,1:i])>0)
@@ -12,6 +22,25 @@ function(N, margins, mu, phi, omega, psi, corstr, corpar, conv=0.01) {
   if (prod(out)==0) stop("Correlation matrix is not positive definite.")
   Theta <- t(c2pc(Ctarget))
   Theta.c <- Theta
+  
+  # check marginal parameters
+  for (i in 1:dimension) {
+    if (margins[i]!="ZIGP"&margins[i]!="GP"&margins[i]!="ZIP"&margins[i]!="Poi"&margins[i]!="NB") {
+      stop(paste("Invalid parameter token (",margins[i], ") for margin ",i,".",sep=""))
+    }
+    if (margins[i]=="ZIGP") {
+      if (is.na(mu[i])|is.na(phi[i])|is.na(omega[i])) stop(paste("Invalid parameters for margin ",i,".",sep=""))
+    }
+    if (margins[i]=="GP") {
+      if (is.na(mu[i])|is.na(phi[i])) stop(paste("Invalid parameters for margin ",i,".",sep=""))
+    }
+    if (margins[i]=="ZIP") {
+      if (is.na(mu[i])|is.na(omega[i])) stop(paste("Invalid parameters for margin ",i,".",sep=""))
+    }
+    if (margins[i]=="NB") {
+      if (is.na(psi[i])) stop(paste("Invalid parameters for margin ",i,".",sep=""))
+    }
+  }
 
 
   X <- matrix(NA,N,dimension)
