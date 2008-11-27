@@ -6,19 +6,21 @@
 Generate correlated count random variables
 }
 \description{
-Generate high-dimensional correlated count random variables
-with a prespecified Pearson correlation.
+Sample high-dimensional correlated count random variables
+with approximate prespecified Pearson correlation and exact margins.
 }
 \details{
 \tabular{ll}{
 Package: \tab corcounts\cr
 Type: \tab Package\cr
-Version: \tab 1.1\cr
-Date: \tab 2008-11-11\cr
+Version: \tab 1.2\cr
+Date: \tab 2008-11-27\cr
 License: \tab GPL (>= 3)\cr
 LazyLoad: \tab yes\cr
 }
 Specify the marginal distributions and parameters and the desired correlation matrix and run 'rcounts()'.
+
+In order to allow for regression, i.e. for individual parameters for each cluster, run 'rcounts.reg()'.
 }
 \author{
 Maintainer: Vinzenz Erhardt <erhardt@ma.tum.de>

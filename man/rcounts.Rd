@@ -3,11 +3,11 @@
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{ Generate correlated count random variables }
 \description{
-'rcounts' is used to generate high-dimensional correlated count random variables
-with a prespecified Pearson correlation.
+'rcounts' is used to sample high-dimensional correlated count random variables
+with approximate prespecified Pearson correlation and exact margins.
 }
 \usage{
-rcounts(N, margins, mu, phi, omega, psi, corstr, corpar, conv = 0.01)
+rcounts(N, margins, mu, phi=rep(NA,length(margins)), omega=rep(NA,length(margins)), psi=rep(NA,length(margins)), corstr, corpar, conv=0.01)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -36,10 +36,9 @@ margins <- c("ZIGP","GP")
 mu <-    c(10,  15)
 phi <-   c(1.5, 3.5)
 omega <- c(.25, NA)
-psi <-   c(NA,  NA)
 corstr <- "ex"
 corpar <- .5
-Y <- rcounts(N=N, margins=margins, mu=mu, phi=phi, omega=omega, psi=psi, corstr=corstr, corpar=corpar, conv=0.0001)
+Y <- rcounts(N=N, margins=margins, mu=mu, phi=phi, omega=omega, corstr=corstr, corpar=corpar, conv=0.0001)
 cor(Y)
 
 

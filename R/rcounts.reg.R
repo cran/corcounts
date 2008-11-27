@@ -1,5 +1,5 @@
-`rcounts` <-
-function(N, margins, mu, phi=rep(NA,length(margins)), omega=rep(NA,length(margins)), psi=rep(NA,length(margins)), corstr, corpar, conv=0.01) {
+`rcounts.reg` <-
+function(N, margins, mu, phi=matrix(NA,N,length(margins)), omega=matrix(NA,N,length(margins)), psi=matrix(NA,N,length(margins)), corstr, corpar, conv=0.01) {
   error <- F
   dimension <- length(margins)
   if (corstr=="ex") {
@@ -29,16 +29,16 @@ function(N, margins, mu, phi=rep(NA,length(margins)), omega=rep(NA,length(margin
       stop(paste("Invalid parameter token (",margins[i], ") for margin ",i,".",sep=""))
     }
     if (margins[i]=="ZIGP") {
-      if (is.na(mu[i])|is.na(phi[i])|is.na(omega[i])) stop(paste("Invalid parameters for margin ",i,".",sep=""))
+      if (sum(is.na(mu[,i]))>0|sum(is.na(phi[,i]))>0|sum(is.na(omega[,i]))>0) stop(paste("Invalid parameters for margin ",i,".",sep=""))
     }
     if (margins[i]=="GP") {
-      if (is.na(mu[i])|is.na(phi[i])) stop(paste("Invalid parameters for margin ",i,".",sep=""))
+      if (sum(is.na(mu[,i]))>0|sum(is.na(phi[,i]))>0) stop(paste("Invalid parameters for margin ",i,".",sep=""))
     }
     if (margins[i]=="ZIP") {
-      if (is.na(mu[i])|is.na(omega[i])) stop(paste("Invalid parameters for margin ",i,".",sep=""))
+      if (sum(is.na(mu[,i]))>0|sum(is.na(omega[,i]))>0) stop(paste("Invalid parameters for margin ",i,".",sep=""))
     }
     if (margins[i]=="NB") {
-      if (is.na(psi[i])) stop(paste("Invalid parameters for margin ",i,".",sep=""))
+      if (sum(is.na(psi[,i]))>0) stop(paste("Invalid parameters for margin ",i,".",sep=""))
     }
   }
 
@@ -54,10 +54,10 @@ function(N, margins, mu, phi=rep(NA,length(margins)), omega=rep(NA,length(margin
   for (i in 2:dimension) {
     V[,i,1] <- W[,i]
     for (k in (i-1):1) {
-        out <- modified.cvine.alg(u1=V[,i,1], u2=V[,k,k],
-                             mu.x=mu[i], phi.x=phi[i], omega.x=omega[i],
-                             mu.y=mu[k], phi.y=phi[k], omega.y=omega[k],
-                             psi.x=psi[i], psi.y=psi[k],
+        out <- modified.cvine.alg.reg(u1=V[,i,1], u2=V[,k,k],
+                             mu.x=mu[,i], phi.x=phi[,i], omega.x=omega[,i],
+                             mu.y=mu[,k], phi.y=phi[,k], omega.y=omega[,k],
+                             psi.x=psi[,i], psi.y=psi[,k],
                              rho.target=Theta[i,k], conv=conv,
                              margin.x=margins[i], margin.y=margins[k])
         if (out$fehler) { error <- TRUE }
@@ -75,14 +75,16 @@ function(N, margins, mu, phi=rep(NA,length(margins)), omega=rep(NA,length(margin
   }
 
   Y <- X
-  for (i in 1:dimension) {
-    if (margins[i]=="Poi")  { Y[,i] <- qpois(X[,i], mu[i]) }
-    if (margins[i]=="GP")   { Y[,i] <- pseudoinv.zigp(X[,i], mu[i], phi[i]) }
-    if (margins[i]=="ZIP")  { Y[,i] <- pseudoinv.zigp(X[,i], mu[i], 1, omega[i]) }
-    if (margins[i]=="ZIGP") { Y[,i] <- pseudoinv.zigp(X[,i], mu[i], phi[i], omega[i]) }
-    if (margins[i]=="NB")   { Y[,i] <- qnbinom(X[,i], mu=mu[i], size=psi[i]) }
+  for (k in 1:N) {
+    for (i in 1:dimension) {
+      if (margins[i]=="Poi")  { Y[k,i] <- qpois(X[k,i], mu[k,i]) }
+      if (margins[i]=="GP")   { Y[k,i] <- pseudoinv.zigp(X[k,i], mu[k,i], phi[k,i]) }
+      if (margins[i]=="ZIP")  { Y[k,i] <- pseudoinv.zigp(X[k,i], mu[k,i], 1, omega[k,i]) }
+      if (margins[i]=="ZIGP") { Y[k,i] <- pseudoinv.zigp(X[k,i], mu[k,i], phi[k,i], omega[k,i]) }
+      if (margins[i]=="NB")   { Y[k,i] <- qnbinom(X[k,i], mu=mu[k,i], size=psi[k,i]) }
+    }
   }
-
+  
   return(Y)
 }
 

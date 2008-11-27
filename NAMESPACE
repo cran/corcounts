@@ -1,1 +1,1 @@
-export(rcounts, unstructured)
+export(rcounts, rcounts.reg, unstructured, c2pc, pc2c)
