@@ -25,7 +25,7 @@ function(u1, u2, mu.x, phi.x, omega.x, mu.y, phi.y, omega.y, psi.x, psi.y,
    if (margin.y=="ZIGP") y <- pseudoinv.zigp(u[,2], mu.y, phi.y, omega.y)
    if (margin.y=="NB")   y <- qnbinom(u[,2], mu=mu.y, size=psi.y)
 
-   rho.m.alt <- cor(x,y)
+   rho.m.alt <- cor((cbind(x,y)[is.finite(x)&is.finite(y),]))[1,2]
 
    if (rho.m.alt > rho.target) { upper <- rhoc
                                  upper.m <- rho.m.alt }
@@ -57,7 +57,7 @@ function(u1, u2, mu.x, phi.x, omega.x, mu.y, phi.y, omega.y, psi.x, psi.y,
        if (margin.y=="ZIGP") y <- pseudoinv.zigp(u[,2], mu.y, phi.y, omega.y)
        if (margin.y=="NB")   y <- qnbinom(u[,2], mu=mu.y, size=psi.y)
 
-       rho.m.neu <- cor(x,y)
+       rho.m.neu <- cor((cbind(x,y)[is.finite(x)&is.finite(y),]))[1,2]
 
        if (rho.m.neu > rho.target) { upper <- rhoc
                                      upper.m <- rho.m.neu }

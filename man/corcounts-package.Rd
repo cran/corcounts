@@ -13,8 +13,8 @@ with approximate prespecified Pearson correlation and exact margins.
 \tabular{ll}{
 Package: \tab corcounts\cr
 Type: \tab Package\cr
-Version: \tab 1.2\cr
-Date: \tab 2008-11-27\cr
+Version: \tab 1.3\cr
+Date: \tab 2009-10-06\cr
 License: \tab GPL (>= 3)\cr
 LazyLoad: \tab yes\cr
 }
@@ -26,9 +26,8 @@ In order to allow for regression, i.e. for individual parameters for each cluste
 Maintainer: Vinzenz Erhardt <erhardt@ma.tum.de>
 }
 \references{
-Erhardt, V., Czado, C. (2008)
-A method for approximately sampling high-dimensional count variables with 
-prespecified Pearson correlation.
+Erhardt, V., Czado, C. (2009)
+A method for approximately sampling high-dimensional count variables with prespecified Pearson correlation.
 Submitted for publication.
 
 Czado, C., Erhardt, V., Min, A., Wagner, S. (2007) 

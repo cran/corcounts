@@ -7,7 +7,9 @@
 with approximate prespecified Pearson correlation and exact margins.
 }
 \usage{
-rcounts.reg(N, margins, mu, phi=matrix(NA,N,length(margins)), omega=matrix(NA,N,length(margins)), psi=matrix(NA,N,length(margins)), corstr, corpar, conv=0.01)
+rcounts.reg(N, margins, mu, phi=matrix(NA,N,length(margins)), 
+            omega=matrix(NA,N,length(margins)), 
+            psi=matrix(NA,N,length(margins)), corstr, corpar, conv=0.01)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -40,7 +42,8 @@ phi <-   matrix(runif(N*2,1,3),N,2)
 omega <- matrix(c(runif(N,0,.3),rep(NA,N)),N,2)
 corstr <- "ex"
 corpar <- .5
-Y <- rcounts.reg(N=N, margins=margins, mu=mu, phi=phi, omega=omega, corstr=corstr, corpar=corpar)
+Y <- rcounts.reg(N=N, margins=margins, mu=mu, phi=phi, omega=omega, 
+                 corstr=corstr, corpar=corpar)
 cor(Y)
 
 }

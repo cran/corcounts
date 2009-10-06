@@ -7,7 +7,9 @@
 with approximate prespecified Pearson correlation and exact margins.
 }
 \usage{
-rcounts(N, margins, mu, phi=rep(NA,length(margins)), omega=rep(NA,length(margins)), psi=rep(NA,length(margins)), corstr, corpar, conv=0.01)
+rcounts(N, margins, mu, phi=rep(NA,length(margins)), 
+        omega=rep(NA,length(margins)), psi=rep(NA,length(margins)), 
+        corstr, corpar, conv=0.01)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -38,7 +40,8 @@ phi <-   c(1.5, 3.5)
 omega <- c(.25, NA)
 corstr <- "ex"
 corpar <- .5
-Y <- rcounts(N=N, margins=margins, mu=mu, phi=phi, omega=omega, corstr=corstr, corpar=corpar, conv=0.0001)
+Y <- rcounts(N=N, margins=margins, mu=mu, phi=phi, omega=omega, corstr=corstr, 
+             corpar=corpar, conv=0.0001)
 cor(Y)
 
 
@@ -52,20 +55,24 @@ psi <-   c(NA,  NA,  NA, 7,  NA)
 # Exchangeable structure with correlation of 0.5
 corstr <- "ex"
 corpar <- .5
-Y <- rcounts(N=N, margins=margins, mu=mu, phi=phi, omega=omega, psi=psi, corstr=corstr, corpar=corpar)
+Y <- rcounts(N=N, margins=margins, mu=mu, phi=phi, omega=omega, psi=psi, 
+             corstr=corstr, corpar=corpar)
 cor(Y)
 
 # AR(1) structure with correlation of corr(Y(t1), Y(t2)) = .8 ^ |t1-t2|
 corstr <- "AR1"
 corpar <- .8
-Y <- rcounts(N=N, margins=margins, mu=mu, phi=phi, omega=omega, psi=psi, corstr=corstr, corpar=corpar)
+Y <- rcounts(N=N, margins=margins, mu=mu, phi=phi, omega=omega, psi=psi, 
+             corstr=corstr, corpar=corpar)
 cor(Y)
 
-# Unstructured correlation. Create random symmetric positive definite matrix using function 'unstructured'
+# Unstructured correlation. Create random symmetric positive definite 
+# matrix using function 'unstructured'
 corstr <- "unstr"
 corpar <- unstructured(5)
 corpar
-Y <- rcounts(N=N, margins=margins, mu=mu, phi=phi, omega=omega, psi=psi, corstr=corstr, corpar=corpar)
+Y <- rcounts(N=N, margins=margins, mu=mu, phi=phi, omega=omega, psi=psi, 
+             corstr=corstr, corpar=corpar)
 cor(Y)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
