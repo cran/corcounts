@@ -13,8 +13,8 @@ with approximate prespecified Pearson correlation and exact margins.
 \tabular{ll}{
 Package: \tab corcounts\cr
 Type: \tab Package\cr
-Version: \tab 1.3\cr
-Date: \tab 2009-10-06\cr
+Version: \tab 1.4\cr
+Date: \tab 2009-11-13\cr
 License: \tab GPL (>= 3)\cr
 LazyLoad: \tab yes\cr
 }
